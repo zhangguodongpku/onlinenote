@@ -1,0 +1,14 @@
+{
+  "name": "onlinenote",
+  "version": "1.0.0",
+  "description": "a online note system. Users can write notes on this website, and read it any time.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "online-note"
+  ],
+  "author": "Zhang Guodong",
+  "license": "ISC"
+}
