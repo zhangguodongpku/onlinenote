@@ -1,0 +1,130 @@
+<%- include header %>
+
+<div class="content-section-b otherpage">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">欢迎加入在线笔记本</h2>
+                <form method="post">
+					<div class="form-group">
+						<input type="text" class="form-control" name="username" placeholder="用户名" />
+						<label class="checkwarning" id="usernm"><%= feedback %>
+						</label>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="password" placeholder="密码" />
+						<label class="checkwarning" id="passwd">
+						</label>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="passwordRepeat" placeholder="再次确认密码" />
+						<label class="checkwarning" id="passwdrp">
+						</label>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default center-block" id="registerButton" disabled="disabled">注册</button>
+					</div>
+				</form>
+            </div>
+            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                <img class="img-responsive" src="img/ipad.png" alt="iPad图片">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	var rg1 = 0, rg2 = 0, rg3 = 0;
+	
+	$("input[name='username']").bind("change keyup",function checkUser(){
+		var tempuser = $("input[name='username']").val();
+		var Regx = /([^_A-Za-z0-9])/g;
+		if(tempuser.length<3 || tempuser.length>20){
+			$("#usernm").text("用户名长度为3-20个字符！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg1 = 0;
+		}else{
+			$("#usernm").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg1 = 1;
+			if(Regx.test(tempuser)){
+				$("#usernm").text("用户名只能包含数字、字母或下划线！");
+				$(this).closest('.form-group').addClass('has-error');
+				rg1 = 0;
+			}else{
+				$("#usernm").text("");
+				$(this).closest('.form-group').removeClass('has-error');
+				rg1 = 1;
+			}
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#registerButton").attr("disabled", false);
+		}else{
+			$("#registerButton").attr("disabled", true);
+		}
+	});
+
+	$("input[name='password']").bind("change keyup",function checkPwd(){
+		var temppwd = $("input[name='password']").val();
+		var Regx = /([^_A-Za-z0-9])/g;
+		var Regx1 = /([A-Z])/g;
+		var Regx2 = /([a-z])/g;
+		var Regx3 = /([0-9])/g;
+		if(temppwd.length<6 || temppwd.length>20){
+			$("#passwd").text("密码长度为6-20个字符！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg2 = 0;
+		}else{
+			$("#passwd").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg2 = 1;
+			if(Regx.test(temppwd)){
+				$("#passwd").text("密码只能包含数字、字母或下划线！");
+				$(this).closest('.form-group').addClass('has-error');
+				rg2 = 0;
+			}else{
+				$("#passwd").text("");
+				$(this).closest('.form-group').removeClass('has-error');
+				rg2 = 1;
+				if(Regx1.test(temppwd) && Regx2.test(temppwd) && Regx3.test(temppwd)){
+					$("#passwd").text("");
+					$(this).closest('.form-group').removeClass('has-error');
+					rg2 = 1;
+				}else{
+					$("#passwd").text("密码必须同时包含数字和大小写字母！");
+					$(this).closest('.form-group').addClass('has-error');
+					rg2 = 0;
+				}
+			}
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#registerButton").attr("disabled", false);
+		}else{
+			$("#registerButton").attr("disabled", true);
+		}
+	});
+	
+	$("input[name='passwordRepeat']").bind("change keyup",function checkPwdRp(){
+		var temppwd = $("input[name='password']").val();
+		var temppwdr = $("input[name='passwordRepeat']").val();
+		if(temppwd !== temppwdr){
+			$("#passwdrp").text("两次输入的密码不一致！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg3 = 0;
+		}else{
+			$("#passwdrp").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg3 = 1;
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#registerButton").attr("disabled", false);
+		}else{
+			$("#registerButton").attr("disabled", true);
+		}
+	});
+});
+</script>
+
+<%- include footer %>

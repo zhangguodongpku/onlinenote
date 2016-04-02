@@ -1,0 +1,51 @@
+<%- include header %>
+
+<div class="content-section-a otherpage">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-5 col-sm-6 notelist">
+                <div class="clearfix"></div>
+				<ul class="list-inline">
+					<% if(pages.prepage == pages.curpage){ %>
+						<li>上一页</li>
+					<% }else{ %>
+						<li><a href="?page=<%= pages.prepage %>">上一页</a></li>
+					<% } for(var i=1;i<pages.nums+1;i++){ if(i == parseInt(pages.curpage, 10)){ %>
+						<li><%= i %></li>
+					<% }else{ %>
+						<li><a href="?page=<%= i %>"><%= i %></a></li>
+					<% }} if(pages.nextpage == pages.curpage){ %>
+						<li>下一页</li>
+					<% }else{ %>
+						<li><a href="?page=<%= pages.nextpage %>">下一页</a></li>
+					<% } %>
+				</ul>
+                <table class="table table-striped">
+					<thead>
+						<tr>
+							<th>标题</th>
+							<th>标签</th>
+							<th>日期</th>
+						</tr>
+					</thead>
+					<tbody>
+					<% if(notelist.length <1){ %>
+					<tr><td>你还没有发表过笔记哦~</td></tr>
+					<% }else{for(var i=0;i<notelist.length;i++){ %>
+					<tr>
+					<td><a href="/detail?notes=<%= notelist[i].id %>"><%= notelist[i].title %></a></td>
+					<td><%= notelist[i].tag %></td>
+					<td><%= notelist[i].time %></td>
+					</tr>
+					<% }} %>
+					</tbody>
+				</table>
+			</div>
+            <div class="col-lg-5 col-lg-offset-2 col-sm-6 notelistpic">
+                <img class="img-responsive" src="img/clock.png" alt="钟表图片">
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include footer %>

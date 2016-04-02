@@ -1,0 +1,142 @@
+<%- include header %>
+
+<div class="content-section-b otherpage">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">修改密码</h2>
+				<h4 class="section-heading" style="color:blue"><%= feedbackSuccess %></h4>
+                <form method="post">
+					<div class="form-group">
+						<input type="password" class="form-control" name="originalPassword" placeholder="原密码" />
+						<label class="checkwarning" id="orgpwd"><%= feedbackFail %>
+						</label>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="newPassword" placeholder="新密码" />
+						<label class="checkwarning" id="passwd">
+						</label>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="newPasswordRepeat" placeholder="再次确认密码" />
+						<label class="checkwarning" id="passwdrp">
+						</label>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default center-block" id="registerButton" disabled="disabled">保存更改</button>
+					</div>
+				</form>
+            </div>
+            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                <img class="img-responsive" src="img/user.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	var rg1 = 0, rg2 = 0, rg3 = 0;
+	
+	$("input[name='originalPassword']").bind("change keyup",function checkUser(){
+		var orgpwd = $("input[name='originalPassword']").val();
+		var Regx = /([^_A-Za-z0-9])/g;
+		var Regx1 = /([A-Z])/g;
+		var Regx2 = /([a-z])/g;
+		var Regx3 = /([0-9])/g;
+		if(orgpwd.length<6 || orgpwd.length>20){
+			$("#orgpwd").text("密码长度为6-20个字符！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg1 = 0;
+		}else{
+			$("#orgpwd").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg1 = 1;
+			if(Regx.test(orgpwd)){
+				$("#orgpwd").text("密码只能包含数字、字母或下划线！");
+				$(this).closest('.form-group').addClass('has-error');
+				rg1 = 0;
+			}else{
+				$("#orgpwd").text("");
+				$(this).closest('.form-group').removeClass('has-error');
+				rg1 = 1;
+				if(Regx1.test(orgpwd) && Regx2.test(orgpwd) && Regx3.test(orgpwd)){
+					$("#orgpwd").text("");
+					$(this).closest('.form-group').removeClass('has-error');
+					rg1 = 1;
+				}else{
+					$("#orgpwd").text("密码必须同时包含数字和大小写字母！");
+					$(this).closest('.form-group').addClass('has-error');
+					rg1 = 0;
+				}
+			}
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#registerButton").attr("disabled", false);
+		}else{
+			$("#registerButton").attr("disabled", true);
+		}
+	});
+
+	$("input[name='newPassword']").bind("change keyup",function checkPwd(){
+		var temppwd = $("input[name='newPassword']").val();
+		var Regx = /([^_A-Za-z0-9])/g;
+		var Regx1 = /([A-Z])/g;
+		var Regx2 = /([a-z])/g;
+		var Regx3 = /([0-9])/g;
+		if(temppwd.length<6 || temppwd.length>20){
+			$("#passwd").text("密码长度为6-20个字符！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg2 = 0;
+		}else{
+			$("#passwd").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg2 = 1;
+			if(Regx.test(temppwd)){
+				$("#passwd").text("密码只能包含数字、字母或下划线！");
+				$(this).closest('.form-group').addClass('has-error');
+				rg2 = 0;
+			}else{
+				$("#passwd").text("");
+				$(this).closest('.form-group').removeClass('has-error');
+				rg2 = 1;
+				if(Regx1.test(temppwd) && Regx2.test(temppwd) && Regx3.test(temppwd)){
+					$("#passwd").text("");
+					$(this).closest('.form-group').removeClass('has-error');
+					rg2 = 1;
+				}else{
+					$("#passwd").text("密码必须同时包含数字和大小写字母！");
+					$(this).closest('.form-group').addClass('has-error');
+					rg2 = 0;
+				}
+			}
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#registerButton").attr("disabled", false);
+		}else{
+			$("#registerButton").attr("disabled", true);
+		}
+	});
+	
+	$("input[name='newPasswordRepeat']").bind("change keyup",function checkPwdRp(){
+		var temppwd = $("input[name='newPassword']").val();
+		var temppwdr = $("input[name='newPasswordRepeat']").val();
+		if(temppwd !== temppwdr){
+			$("#passwdrp").text("两次输入的密码不一致！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg3 = 0;
+		}else{
+			$("#passwdrp").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg3 = 1;
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#registerButton").attr("disabled", false);
+		}else{
+			$("#registerButton").attr("disabled", true);
+		}
+	});
+});
+</script>
+<%- include footer %>

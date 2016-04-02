@@ -1,0 +1,22 @@
+<%- include header %>
+
+<div class="content-section-a otherpage">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-5 col-sm-6 notelist">
+                <div class="clearfix"></div>
+				<h2 class="section-heading"><%= notes.title %></h2>
+				<h6 class="section-heading">标签：<%= notes.tag %><span class="pull-right">发表时间：<%= notes.time %></span></h6>
+				<% for(var i=0;i<notes.content.length;i++){ %>
+					<p class="lead"><%= notes.content[i] %></p>
+				<% } %>
+                <p class="lead"></p>
+			</div>
+            <div class="col-lg-5 col-lg-offset-2 col-sm-6 notelistpic">
+                <img class="img-responsive" src="img/robot.png" alt="钟表图片">
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include footer %>

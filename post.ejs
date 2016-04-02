@@ -1,0 +1,102 @@
+<%- include header %>
+
+<div class="content-section-a">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-5 col-sm-6">
+                <div class="clearfix"></div>
+                <h3 class="section-heading">写点什么呢？</h3>
+                <form class="form-horizontal" method="post">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="title" id="title" placeholder="标题" />
+						</div>
+						<label class="col-sm-2 checkwarning" id="tt" for="title">*</label>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="tag" placeholder="标签" />
+						</div>
+						<label class="col-sm-2 checkwarning" id="bq">*</label>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10">
+						<textarea rows=8 cols=20 class="form-control" name="content" placeholder="文章内容"></textarea>
+						</div>
+						<label class="col-sm-2 checkwarning" id="ct">*</label>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-default center-block" id="saveButton">保存</button>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="col-lg-5 col-lg-offset-2 col-sm-6 otherpage">
+                <img class="img-responsive" src="img/phones.png" alt="iPhone图片">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	var rg1 = 0, rg2 = 0, rg3 = 0;
+	
+	$("input[name='title']").bind("change keyup",function checkUser(){
+		var title = $("input[name='title']").val();
+		if(title.trim().length < 1){
+			$("#tt").text("必填");
+			$(this).closest('.form-group').addClass('has-error');
+			rg1 = 0;
+		}else{
+			$("#tt").text("*");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg1 = 1;
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#saveButton").attr("disabled", false);
+		}else{
+			$("#saveButton").attr("disabled", true);
+		}
+	});
+
+	$("input[name='tag']").bind("change keyup",function checkPwd(){
+		var tag = $("input[name='tag']").val();
+		if(tag.trim().length < 1){
+			$("#bq").text("必填");
+			$(this).closest('.form-group').addClass('has-error');
+			rg2 = 0;
+		}else{
+			$("#bq").text("*");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg2 = 1;
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#saveButton").attr("disabled", false);
+		}else{
+			$("#saveButton").attr("disabled", true);
+		}
+	});
+	
+	$("textarea[name='content']").bind("change keyup",function checkPwdRp(){
+		var content = $("textarea[name='content']").val();
+		if(content.trim().length < 1){
+			$("#ct").text("必填");
+			$(this).closest('.form-group').addClass('has-error');
+			rg3 = 0;
+		}else{
+			$("#ct").text("*");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg3 = 1;
+		}
+		if(rg1 + rg2 + rg3 == 3){
+			$("#saveButton").attr("disabled", false);
+		}else{
+			$("#saveButton").attr("disabled", true);
+		}
+	});
+});
+</script>
+
+<%- include footer %>

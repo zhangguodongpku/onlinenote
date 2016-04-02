@@ -1,0 +1,115 @@
+<%- include header %>
+
+<div class="content-section-b otherpage">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">欢迎使用在线笔记本</h2>
+                <form method="post">
+					<div class="form-group">
+						<input type="text" class="form-control" name="username" placeholder="用户名" />
+						<label class="checkwarning" id="usernm"><%= feedbackuser %>
+						</label>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="password" placeholder="密码" />
+						<label class="checkwarning" id="passwd"><%= feedbackpwd %>
+						</label>
+					</div>
+					<div class="form-group">
+						<label>
+							<input type="checkbox" name="checkbox">&nbsp;&nbsp;一周内免登录
+						</label>
+						<label class="pull-right">
+							<a href="/qq"><img src="/img/Connect_logo_qq.png" alt="用QQ登录" /></a>
+						</label>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default center-block" id="loginButton" disabled="disabled">登录</button>
+					</div>
+				</form>
+            </div>
+            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                <img class="img-responsive" src="img/dog.png" alt="小狗图片">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	var rg1 = 0, rg2 = 0;
+	
+	$("input[name='username']").bind("change keyup",function checkUser(){
+		var tempuser = $("input[name='username']").val();
+		var Regx = /([^_A-Za-z0-9])/g;
+		if(tempuser.length<3 || tempuser.length>20){
+			$("#usernm").text("用户名长度为3-20个字符！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg1 = 0;
+		}else{
+			$("#usernm").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg1 = 1;
+			if(Regx.test(tempuser)){
+				$("#usernm").text("用户名只能包含数字、字母或下划线！");
+				$(this).closest('.form-group').addClass('has-error');
+				rg1 = 0;
+			}else{
+				$("#usernm").text("");
+				$(this).closest('.form-group').removeClass('has-error');
+				rg1 = 1;
+			}
+		}
+		if(rg1 + rg2 == 2){
+			$("#loginButton").attr("disabled", false);
+		}else{
+			$("#loginButton").attr("disabled", true);
+		}
+	});
+
+	$("input[name='password']").bind("change keyup",function checkPwd(){
+		var temppwd = $("input[name='password']").val();
+		var Regx = /([^_A-Za-z0-9])/g;
+		var Regx1 = /([A-Z])/g;
+		var Regx2 = /([a-z])/g;
+		var Regx3 = /([0-9])/g;
+		if(temppwd.length<6 || temppwd.length>20){
+			$("#passwd").text("密码长度为6-20个字符！");
+			$(this).closest('.form-group').addClass('has-error');
+			rg2 = 0;
+		}else{
+			$("#passwd").text("");
+			$(this).closest('.form-group').removeClass('has-error');
+			rg2 = 1;
+			if(Regx.test(temppwd)){
+				$("#passwd").text("密码只能包含数字、字母或下划线！");
+				$(this).closest('.form-group').addClass('has-error');
+				rg2 = 0;
+			}else{
+				$("#passwd").text("");
+				$(this).closest('.form-group').removeClass('has-error');
+				rg2 = 1;
+				if(Regx1.test(temppwd) && Regx2.test(temppwd) && Regx3.test(temppwd)){
+					$("#passwd").text("");
+					$(this).closest('.form-group').removeClass('has-error');
+					rg2 = 1;
+				}else{
+					$("#passwd").text("密码必须同时包含数字和大小写字母！");
+					$(this).closest('.form-group').addClass('has-error');
+					rg2 = 0;
+				}
+			}
+		}
+		if(rg1 + rg2 == 2){
+			$("#loginButton").attr("disabled", false);
+		}else{
+			$("#loginButton").attr("disabled", true);
+		}
+	});
+});
+</script>
+
+<%- include footer %>
